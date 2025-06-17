@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RevistaService {
@@ -17,13 +18,13 @@ public class RevistaService {
         return revistaRepository.findAll();
     }
 
-    public Revista findById(Long id) {
-        return revistaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Revista no encontrada con id: " + id));
+    public void save(Revista revista) {
+        revistaRepository.save(revista);
     }
 
-    public Revista save(Revista revista) {
-        return revistaRepository.save(revista);
+    public Revista findById(Long id) {
+        Optional<Revista> optional = revistaRepository.findById(id);
+        return optional.orElse(null);
     }
 
     public void deleteById(Long id) {

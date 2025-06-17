@@ -28,7 +28,7 @@ public class DVDController {
 
     @PostMapping("/guardar")
     public String guardarDVD(@ModelAttribute DVD dvd) {
-        dvdService.save(dvd);
+        dvdService.saveDVD(dvd);
         return "redirect:/dvds";
     }
 

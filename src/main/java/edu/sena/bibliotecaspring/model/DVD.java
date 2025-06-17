@@ -1,16 +1,21 @@
 package edu.sena.bibliotecaspring.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
+
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class DVD extends ElementoBiblioteca {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Para MySQL
     private String director;
     private String genero;
     private int duracion;
 
-    public DVD() {
-    }
+
+
+    public DVD() {}
 
     public DVD(String titulo, LocalDate fechaPublicacion, String director, String genero, int duracion) {
         super(titulo, fechaPublicacion);

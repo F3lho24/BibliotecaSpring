@@ -4,25 +4,32 @@ import edu.sena.bibliotecaspring.model.DVD;
 import edu.sena.bibliotecaspring.repository.DVDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
+
+
 public class DVDService {
 
+    private final DVDRepository dvdRepository;
+
     @Autowired
-    private DVDRepository dvdRepository;
+    public DVDService(DVDRepository dvdRepository) {
+        this.dvdRepository = dvdRepository;
+    }
 
     public List<DVD> findAll() {
         return dvdRepository.findAll();
     }
 
     public DVD findById(Long id) {
-        return dvdRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("DVD no encontrado con id: " + id));
+        return dvdRepository.findById(id).orElse(null);
     }
 
-    public DVD save(DVD dvd) {
+    public DVD saveDVD(DVD dvd) {
         return dvdRepository.save(dvd);
     }
 
@@ -38,3 +45,4 @@ public class DVDService {
         return dvdRepository.findByDirectorContaining(director);
     }
 }
+

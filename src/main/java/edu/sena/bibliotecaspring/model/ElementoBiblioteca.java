@@ -1,10 +1,12 @@
 package edu.sena.bibliotecaspring.model;
 
+import jakarta.annotation.ManagedBean;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@PrimaryKeyJoinColumn(name = "id")
 public abstract class ElementoBiblioteca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -58,7 +58,7 @@ INSERT INTO revista (id, categoria, numero, editorial) VALUES
 (5, 'Actualidad', 45, 'Time USA, LLC'),
 (6, 'Ciencia', 328, 'Springer Nature');
 
--- Datos de ejemplo para DVDs
+-- Datos de ejemplo para DVD
 INSERT INTO elemento_biblioteca (titulo, fecha_publicacion) VALUES
 ('El Padrino', '1972-03-24'),
 ('Titanic', '1997-12-19'),
@@ -68,3 +68,4 @@ INSERT INTO dvd (id, director, genero, duracion) VALUES
 (7, 'Francis Ford Coppola', 'Drama', 175),
 (8, 'James Cameron', 'Romance/Drama', 195),
 (9, 'James Cameron', 'Ciencia ficción', 162);
+
