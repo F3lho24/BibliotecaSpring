@@ -1,29 +1,31 @@
 package edu.sena.bibliotecaspring.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
-
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
+@Table(name = "dvd")
 public class DVD extends ElementoBiblioteca {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Para MySQL
     private String director;
     private String genero;
     private int duracion;
 
-
-
-    public DVD() {}
-
-    public DVD(String titulo, LocalDate fechaPublicacion, String director, String genero, int duracion) {
-        super(titulo, fechaPublicacion);
-        this.director = director;
-        this.genero = genero;
-        this.duracion = duracion;
+    // Constructor vacío requerido por JPA
+    public DVD() {
+        super();
+        this.setTipo("DVD");
     }
 
+    // Constructor para crear nuevos DVD
+    public DVD(String titulo, String autor, Long anoPublicacion,
+               String director, String genero, Long duracion) {
+        super(titulo, autor, anoPublicacion != null ? anoPublicacion.intValue() : null, "DVD");
+        this.director = director;
+        this.genero = genero != null ? genero : "Sin clasificar";
+        this.duracion = duracion != null ? duracion.intValue() : 0;
+    }
+
+    // Getters y setters
     public String getDirector() {
         return director;
     }
@@ -37,7 +39,7 @@ public class DVD extends ElementoBiblioteca {
     }
 
     public void setGenero(String genero) {
-        this.genero = genero;
+        this.genero = genero != null && !genero.trim().isEmpty() ? genero : "Sin clasificar";
     }
 
     public int getDuracion() {
@@ -46,5 +48,19 @@ public class DVD extends ElementoBiblioteca {
 
     public void setDuracion(int duracion) {
         this.duracion = duracion;
+    }
+
+    // Método para garantizar que genero nunca sea nulo
+    @PrePersist
+    @PreUpdate
+    private void prePersist() {
+        if (genero == null || genero.trim().isEmpty()) {
+            genero = "Sin clasificar";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " - Director: " + director + " - Duración: " + duracion + " min - " + genero;
     }
 }

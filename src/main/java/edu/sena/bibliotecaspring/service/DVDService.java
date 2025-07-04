@@ -4,19 +4,14 @@ import edu.sena.bibliotecaspring.model.DVD;
 import edu.sena.bibliotecaspring.repository.DVDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional
-
-
 public class DVDService {
 
     private final DVDRepository dvdRepository;
 
-    @Autowired
     public DVDService(DVDRepository dvdRepository) {
         this.dvdRepository = dvdRepository;
     }
@@ -25,15 +20,24 @@ public class DVDService {
         return dvdRepository.findAll();
     }
 
-    public DVD findById(Long id) {
-        return dvdRepository.findById(id).orElse(null);
+    public DVD findById(Integer id) {
+        return dvdRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("DVD no encontrado con id: " + id));
     }
 
-    public DVD saveDVD(DVD dvd) {
+    public DVD save(DVD dvd) {
+        // Asegurar que el tipo siempre sea "DVD"
+        dvd.setTipo("DVD");
+
+        // Asegurar que género nunca sea nulo
+        if (dvd.getGenero() == null || dvd.getGenero().trim().isEmpty()) {
+            dvd.setGenero("Sin clasificar");
+        }
+
         return dvdRepository.save(dvd);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         dvdRepository.deleteById(id);
     }
 
@@ -44,5 +48,8 @@ public class DVDService {
     public List<DVD> findByDirector(String director) {
         return dvdRepository.findByDirectorContaining(director);
     }
-}
 
+    public List<DVD> findByAutor(String autor) {
+        return dvdRepository.findByAutorContaining(autor);
+    }
+}
