@@ -76,7 +76,7 @@ Para ejecutar la aplicación:
 1. Asegúrate de tener instalado JDK 17 o superior
 2. Configura la conexión a la base de datos en `application.properties`
 3. Ejecuta la clase `BibliotecaSpringApplication.java`
-4. Abre un navegador y accede a `http://localhost:8080`
+4. Abre un navegador y accede a `http://localhost:8081`
 
 ## Funcionalidades Principales
 
